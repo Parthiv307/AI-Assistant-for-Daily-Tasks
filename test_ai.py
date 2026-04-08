@@ -1,14 +1,9 @@
 import google.generativeai as genai
-
-# Make sure there are no spaces after the " or before the "
-API_KEY = "AIzaSy..." 
-genai.configure(api_key=API_KEY)
-
-model = genai.GenerativeModel('gemini-1.5-flash')
+genai.configure(api_key="AIzaSyBnoIaPXaID5YDuHW0wtAGKhn94KBo2kzU")
 
 try:
-    print("Testing connection...")
-    response = model.generate_content("Say 'Connected!'")
-    print(response.text)
+    for m in genai.list_models():
+        if 'generateContent' in m.supported_generation_methods:
+            print(f"AVAILABLE MODEL: {m.name}")
 except Exception as e:
-    print(f"Still having trouble: {e}")
+    print(f"CONNECTION ERROR: {e}")
