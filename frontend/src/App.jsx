@@ -107,9 +107,16 @@ const App = () => {
                   h1: ({node, ...props}) => <h1 className="text-3xl font-extrabold mb-5 mt-6 text-white" {...props} />,
                   h2: ({node, ...props}) => <h2 className="text-2xl font-bold mb-4 mt-6 text-white" {...props} />,
                   h3: ({node, ...props}) => <h3 className="text-xl font-semibold mb-3 mt-5 text-white/90" {...props} />,
-                  code: ({node, inline, ...props}) => 
-                    inline ? <code className="bg-white/10 px-2 py-0.5 rounded-md text-sm font-mono text-indigo-300" {...props} /> 
-                           : <div className="bg-black/50 p-5 rounded-2xl border border-white/10 my-6 overflow-x-auto shadow-inner"><code className="font-mono text-sm text-gray-300" {...props} /></div>,
+                  code: ({node, className, ...props}) => {
+                    const match = /language-(\w+)/.exec(className || '');
+                    return !match ? (
+                      <code className="bg-white/10 px-2 py-0.5 rounded-md text-sm font-mono text-indigo-300 align-middle" {...props} />
+                    ) : (
+                      <div className="bg-black/50 p-5 rounded-2xl border border-white/10 my-6 overflow-x-auto shadow-inner">
+                        <code className={`font-mono text-sm text-gray-300 ${className || ''}`} {...props} />
+                      </div>
+                    );
+                  },
                 }}
               >
                 {response}
